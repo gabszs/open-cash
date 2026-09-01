@@ -1,0 +1,82 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	// Must match AGENT_NAME in infra/workers/agent.ts: `wrangler dev` resolves the
+	// server's AGENT_SERVICE binding by script name, so a mismatch breaks the
+	// local service binding even though production is deployed by Alchemy.
+	"name": "open-cash-finance-agent",
+	"workers_dev": false,
+	"preview_urls": false,
+	"compatibility_date": "2026-08-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true,
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+		},
+	},
+	// Flue generates the Durable Object classes and bindings, but the ordered
+	// migration history is owned here. Generated Flue classes require SQLite:
+	// always introduce them through `new_sqlite_classes`, never `new_classes`.
+	// Nothing has been deployed yet, so this starts at v1 — once it has, append a
+	// new uniquely tagged entry instead of rewriting this one.
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["FlueFinanceAgentAgent"],
+		},
+		{
+			"tag": "v2",
+			"new_sqlite_classes": ["Sandbox"],
+		},
+		{
+			"tag": "v3",
+			"new_sqlite_classes": ["UserIdentityDO"],
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "USER_IDENTITY",
+				"class_name": "UserIdentityDO",
+			},
+			{
+				"name": "Sandbox",
+				"class_name": "Sandbox",
+			},
+		],
+	},
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 2,
+		},
+	],
+	// Model dispatch: `env.AI.run(...)` through AI Gateway. No API key — the
+	// Worker's own account authorizes and is billed.
+	"ai": {
+		"binding": "AI",
+	},
+	"r2_buckets": [
+		{
+			"binding": "R2",
+			"bucket_name": "open-cash-bucket",
+			"preview_bucket_name": "open-cash-bucket",
+		},
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SHARED_KV",
+			"id": "00000000000000000000000000000001",
+			"preview_id": "00000000000000000000000000000001",
+		},
+	],
+	"secrets": {
+		"required": ["FINANCE_MCP_URL"],
+	},
+	"version_metadata": {
+		"binding": "VERSION_METADATA",
+	},
+}

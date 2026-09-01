@@ -1,0 +1,76 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"ui": "tui",
+	"globalDependencies": ["oxlint.config.mjs", "oxfmt.config.mjs"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"]
+		},
+		"//#lint:repo": {
+			"cache": false
+		},
+		"lint": {
+			"dependsOn": ["^lint"],
+			"cache": false
+		},
+		"//#lint:repo:check": {},
+		"lint:check": {
+			"dependsOn": ["^lint:check"]
+		},
+		"//#lint:repo:unsafe": {
+			"cache": false
+		},
+		"lint:unsafe": {
+			"dependsOn": ["^lint:unsafe"],
+			"cache": false
+		},
+		"//#format:repo": {
+			"cache": false
+		},
+		"format": {
+			"dependsOn": ["^format"],
+			"cache": false
+		},
+		"//#format:repo:check": {},
+		"format:check": {
+			"dependsOn": ["^format:check"]
+		},
+		"typecheck": {
+			"dependsOn": ["^typecheck"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"otel-dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:push": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:studio": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:migrate": {
+			"cache": false,
+			"persistent": true
+		},
+		"db:generate": {
+			"cache": false,
+			"persistent": true
+		},
+		"do:generate": {
+			"cache": false,
+			"persistent": true
+		},
+		"vite:clean": {
+			"cache": false
+		},
+		"auth:generate": {
+			"cache": false
+		}
+	}
+}

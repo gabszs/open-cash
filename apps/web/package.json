@@ -1,0 +1,49 @@
+{
+	"name": "web",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite --port 5055",
+		"build": "vite build",
+		"preview": "vite preview --port 5055",
+		"typecheck": "tsc --noEmit",
+		"lint": "oxlint --config ../../oxlint.config.mjs --fix . && oxfmt --config ../../oxfmt.config.mjs --write .",
+		"lint:check": "oxfmt --config ../../oxfmt.config.mjs --check . && oxlint --config ../../oxlint.config.mjs .",
+		"format": "oxfmt --config ../../oxfmt.config.mjs --write .",
+		"format:check": "oxfmt --config ../../oxfmt.config.mjs --check ."
+	},
+	"dependencies": {
+		"@better-auth/agent-auth": "^0.6.2",
+		"@better-auth/api-key": "1.6.23",
+		"@daypicker/react": "^10.0.1",
+		"@flue/react": "2.0.1",
+		"@flue/sdk": "2.0.1",
+		"@open-cash/files": "workspace:*",
+		"@orpc/client": "catalog:",
+		"@orpc/server": "catalog:",
+		"@orpc/tanstack-query": "catalog:",
+		"@tanstack/react-query": "^5.90.12",
+		"@tanstack/react-router": "^1.141.1",
+		"better-auth": "catalog:",
+		"better-auth-cloudflare": "^0.3.0",
+		"hono": "catalog:",
+		"lucide-react": "^0.560.0",
+		"qrcode.react": "^4.2.0",
+		"react": "19.2.8",
+		"react-dom": "19.2.8",
+		"react-markdown": "^10.1.0",
+		"remark-gfm": "^4.0.1"
+	},
+	"devDependencies": {
+		"@tailwindcss/vite": "^4.3.3",
+		"@tanstack/react-query-devtools": "^5.91.1",
+		"@tanstack/react-router-devtools": "^1.141.1",
+		"@tanstack/router-plugin": "^1.141.1",
+		"@types/react": "^19.2.7",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^5.1.2",
+		"tailwindcss": "^4.3.3",
+		"typescript": "catalog:",
+		"vite": "8.1.5"
+	}
+}

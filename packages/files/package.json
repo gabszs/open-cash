@@ -1,0 +1,21 @@
+{
+	"name": "@open-cash/files",
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./validation": "./src/validation.ts"
+	},
+	"scripts": {
+		"lint": "oxlint --config ../../oxlint.config.mjs --fix . && oxfmt --config ../../oxfmt.config.mjs --write .",
+		"lint:check": "oxfmt --config ../../oxfmt.config.mjs --check . && oxlint --config ../../oxlint.config.mjs .",
+		"lint:unsafe": "oxlint --config ../../oxlint.config.mjs --fix-dangerously . && oxfmt --config ../../oxfmt.config.mjs --write .",
+		"format": "oxfmt --config ../../oxfmt.config.mjs --write .",
+		"format:check": "oxfmt --config ../../oxfmt.config.mjs --check .",
+		"typecheck": "tsc -p tsconfig.json",
+		"test": "bun test"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^5.20260715.1"
+	}
+}

@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+@source "./";
+
+/* The theme is toggled by a `dark` class on <html> (see main.tsx), not by the
+   OS preference Tailwind defaults to. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens — ported from the Shadow design system (oklch neutral scale),
+   extended with a finance brand ramp for money-specific signals.
+--------------------------------------------------------------------------- */
+
+:root {
+	--radius: 0.5rem;
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--background-beige: #e6d6c0;
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(0.985 0 0);
+	--popover: oklch(1 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.985 0 0);
+	--ring: oklch(0.708 0 0);
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.955 0 0);
+	--sidebar-border: oklch(0.905 0 0);
+
+	--brand: oklch(0.52 0.11 162);
+	--brand-foreground: oklch(0.99 0 0);
+	--brand-muted: oklch(0.955 0.028 162);
+	--positive: oklch(0.52 0.11 162);
+	--negative: oklch(0.577 0.245 27.325);
+	--warning: oklch(0.6984 0.1539 54.87);
+
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.09), 0 1px 2px -1px rgb(0 0 0 / 0.09);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.09), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+
+	--rail-width: 53px;
+	--sub-sidebar-width: 20rem;
+
+	--ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+	font-family: Geist, system-ui, sans-serif;
+	font-synthesis: none;
+	color: var(--foreground);
+	background: var(--background);
+	color-scheme: light;
+}
+
+:root.dark {
+	--background: oklch(0.1957 0 0);
+	--foreground: oklch(0.9551 0 0);
+	--card: oklch(0.2393 0 0);
+	--popover: oklch(0.2393 0 0);
+	--primary: oklch(0.922 0 0);
+	--primary-foreground: oklch(0.2393 0 0);
+	--secondary: oklch(0.2393 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.285 0 0);
+	--destructive: oklch(0.704 0.191 22.216);
+	--border: oklch(0.285 0 0);
+	--input: oklch(0.2393 0 0);
+	--ring: oklch(0.556 0 0);
+	--sidebar: oklch(0.2393 0 0);
+	--sidebar-accent: oklch(0.285 0 0);
+	--sidebar-border: oklch(0.3329 0 0);
+
+	--brand: oklch(0.7754 0.1447 169.6);
+	--brand-foreground: oklch(0.1957 0 0);
+	--brand-muted: oklch(0.3 0.045 169.6);
+	--positive: oklch(0.7754 0.1447 169.6);
+	--negative: oklch(0.704 0.191 22.216);
+	--warning: oklch(0.6984 0.1539 54.87);
+
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.45), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+	--shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+	--shadow-lg: 0 14px 30px -8px rgb(0 0 0 / 0.6), 0 6px 12px -6px rgb(0 0 0 / 0.45);
+
+	color-scheme: dark;
+}
+
+/* Confirmation for a copy: the check overshoots slightly on the way in, so the
+   swap registers even when the eye is somewhere else on the page. */
+@keyframes pop-check {
+	from {
+		opacity: 0;
+		transform: scale(0.4);
+	}
+	60% {
+		opacity: 1;
+		transform: scale(1.18);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* `inline` keeps the utilities pointing at the tokens above (`bg-card` emits
+   `var(--card)`), so a theme switch still flows through them. Radii are
+   recomputed from `--radius` rather than aliased, because Tailwind's namespace
+   uses the same names as the tokens and an alias would be self-referential.
+   Shadows are left out for the same reason — use `shadow-[var(--shadow-md)]`. */
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-popover: var(--popover);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-brand: var(--brand);
+	--color-brand-foreground: var(--brand-foreground);
+	--color-brand-muted: var(--brand-muted);
+	--color-positive: var(--positive);
+	--color-negative: var(--negative);
+	--color-warning: var(--warning);
+
+	--font-sans: Geist, system-ui, sans-serif;
+	--font-mono: "Geist Mono", ui-monospace, monospace;
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--animate-pop-check: pop-check 0.28s var(--ease-out-quart);
+	--animate-pop-in: pop-in 0.12s var(--ease-out-quart);
+	--animate-fade-in: fade-in 0.15s ease;
+
+	--breakpoint-wide: 68.75rem;
+	--breakpoint-shell: 51.25rem;
+	--breakpoint-mobile: 35rem;
+}
+
+@keyframes pop-in {
+	from {
+		opacity: 0;
+		transform: translateY(-3px) scale(0.98);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@layer base {
+	* {
+		border-color: var(--border);
+	}
+
+	html,
+	body,
+	#app {
+		height: 100%;
+		min-width: 320px;
+	}
+
+	body {
+		background: var(--background);
+		color: var(--foreground);
+		font-size: 14px;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	button,
+	a {
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	:focus-visible {
+		outline: 2px solid color-mix(in oklab, var(--ring) 60%, transparent);
+		outline-offset: 1px;
+	}
+
+	::selection {
+		background: var(--primary);
+		color: var(--primary-foreground);
+	}
+}
+
+/* The artwork responds to the space inside the presentation panel. The panel
+   can become narrow while the viewport is still desktop-sized because it only
+   occupies 70% of the authentication shell. */
+.auth-hero {
+	container: auth-hero / inline-size;
+}
+
+@container auth-hero (max-width: 64rem) {
+	.auth-hero-content {
+		max-width: 44rem;
+		grid-template-columns: minmax(0, 1fr);
+		gap: clamp(1rem, 3cqw, 2rem);
+	}
+
+	.auth-hero-copy {
+		width: 100%;
+		max-width: 36rem;
+		transform: none;
+		justify-self: start;
+	}
+
+	.auth-hero-art {
+		width: clamp(15rem, 58cqw, 29rem);
+		max-width: 100%;
+		justify-self: center;
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"jsx": "react-jsx",
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"verbatimModuleSyntax": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"types": ["vite/client"],
+		// `src/lib/serverClient.ts` faz `import type { AppType }` do fonte do
+		// server, então o fonte dele é type-checked por ESTE tsconfig e os
+		// aliases dele precisam resolver aqui.
+		"paths": {
+			"@/*": ["./src/*"],
+			"@server/*": ["../server/src/*"],
+			"@root/*": ["../../*"]
+		}
+	},
+	"include": ["src", "types", "vite.config.ts"],
+	"references": [{ "path": "../server" }]
+}

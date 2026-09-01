@@ -1,0 +1,44 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "worker:debug",
+			"type": "shell",
+			"command": "bun",
+			"args": ["run", "--cwd", "apps/server", "debug"],
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "worker-debug",
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*Starting local server.*",
+					"endsPattern": ".*Ready on http://.*"
+				}
+			},
+			"presentation": {
+				"reveal": "always",
+				"panel": "dedicated"
+			}
+		},
+		{
+			"label": "alchemy-dev",
+			"type": "shell",
+			"command": "bun",
+			"args": ["alchemy", "dev", "--inspect-wait", "--env-file", ".env"],
+			"isBackground": true,
+			"problemMatcher": {
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": ".*",
+					"endsPattern": "Waiting for inspector to connect.*"
+				}
+			}
+		}
+	]
+}

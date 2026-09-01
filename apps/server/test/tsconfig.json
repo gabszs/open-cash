@@ -1,0 +1,12 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"composite": false,
+		"moduleResolution": "bundler",
+		"noEmit": true,
+		"rootDir": "..",
+		"types": ["@cloudflare/vitest-pool-workers/types", "bun", "node", "vitest"]
+	},
+	"exclude": ["./src/common/repository/**", "./src/features/properties/**"],
+	"include": ["./**/*.ts", "../migrations.d.ts", "../worker-configuration.d.ts"]
+}

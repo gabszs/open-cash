@@ -1,0 +1,32 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "agents",
+	"compatibility_date": "2026-07-24",
+	"compatibility_flags": ["nodejs_compat"],
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["FlueRegistry", "FlueTranslateWorkflow", "FlueTranslateAgent"],
+		},
+	],
+	"version_metadata": {
+		"binding": "VERSION_METADATA",
+	},
+	"main": ".flue-vite/_entry.ts",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "FLUE_TRANSLATE_AGENT",
+				"class_name": "FlueTranslateAgent",
+			},
+			{
+				"name": "FLUE_TRANSLATE_WORKFLOW",
+				"class_name": "FlueTranslateWorkflow",
+			},
+			{
+				"name": "FLUE_REGISTRY",
+				"class_name": "FlueRegistry",
+			},
+		],
+	},
+}

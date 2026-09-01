@@ -1,0 +1,76 @@
+{
+	"name": "open-cash",
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*"
+		],
+		"catalog": {
+			"better-auth": "v1.6.23",
+			"bun": "^1.3.14",
+			"typescript": "^7",
+			"hono": "^4.13.1",
+			"zod": "^4.4.3",
+			"@cloudflare/vitest-pool-workers": "^0.18.4",
+			"dotenv": "^17.4.2",
+			"vitest": "^4.1.10",
+			"@orpc/client": "^1.14.8",
+			"@orpc/openapi": "^1.14.8",
+			"@orpc/server": "^1.14.8",
+			"@orpc/tanstack-query": "^1.14.8",
+			"@orpc/zod": "^1.14.8",
+			"@types/node": "^26.1.1"
+		}
+	},
+	"type": "module",
+	"module": "index.ts",
+	"scripts": {
+		"lint": "turbo run '//#lint:repo' lint --continue=always",
+		"typecheck": "turbo run typecheck",
+		"lint:repo": "oxlint --config oxlint.config.mjs --fix oxlint.config.mjs oxfmt.config.mjs && oxfmt --config oxfmt.config.mjs --write --no-error-on-unmatched-pattern package.json turbo.json oxlint.config.mjs oxfmt.config.mjs .vscode/settings.json",
+		"lint:check": "turbo run '//#lint:repo:check' lint:check --continue=always",
+		"lint:repo:check": "oxfmt --config oxfmt.config.mjs --check --no-error-on-unmatched-pattern package.json turbo.json oxlint.config.mjs oxfmt.config.mjs .vscode/settings.json && oxlint --config oxlint.config.mjs oxlint.config.mjs oxfmt.config.mjs",
+		"lint:unsafe": "turbo run '//#lint:repo:unsafe' lint:unsafe --continue=always",
+		"lint:repo:unsafe": "oxlint --config oxlint.config.mjs --fix-dangerously oxlint.config.mjs oxfmt.config.mjs && oxfmt --config oxfmt.config.mjs --write --no-error-on-unmatched-pattern package.json turbo.json oxlint.config.mjs oxfmt.config.mjs .vscode/settings.json",
+		"format": "turbo run '//#format:repo' format",
+		"format:repo": "oxfmt --config oxfmt.config.mjs --write --no-error-on-unmatched-pattern package.json turbo.json oxlint.config.mjs oxfmt.config.mjs .vscode/settings.json",
+		"format:check": "turbo run '//#format:repo:check' format:check",
+		"format:repo:check": "oxfmt --config oxfmt.config.mjs --check --no-error-on-unmatched-pattern package.json turbo.json oxlint.config.mjs oxfmt.config.mjs .vscode/settings.json",
+		"check:unsafe": "bun run lint:unsafe",
+		"db:generate": "bun run --cwd apps/server db:generate --",
+		"db:migrate": "bun run --cwd apps/server db:migrate",
+		"db:studio": "bun run --cwd apps/server db:studio",
+		"auth:generate": "bun run --cwd apps/server auth:generate"
+	},
+	"dependencies": {
+		"hono": "^4.13.1"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^5.20260715.1",
+		"@effect/platform-bun": ">=4.0.0-beta.97|| >=4.0.0",
+		"@effect/platform-node": ">=4.0.0-beta.97|| >=4.0.0",
+		"@types/bun": "latest",
+		"alchemy": "^2.0.0-beta.62",
+		"drizzle-orm": "^0.45.2",
+		"effect": ">=4.0.0-beta.97|| >=4.0.0",
+		"oxfmt": "^0.58.0",
+		"oxlint": "^1.74.0",
+		"turbo": "^2.10.5",
+		"ultracite": "^7.9.4",
+		"vite": "8.1.5",
+		"wrangler": "^4.110.0"
+	},
+	"peerDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.18.4",
+		"dotenv": "^17.4.2",
+		"typescript": "^5.9.3",
+		"vitest": "^4.1.10"
+	},
+	"overrides": {
+		"hono": "4.13.1",
+		"kysely": "0.28.17",
+		"vite": "8.1.5"
+	},
+	"packageManager": "bun@1.3.13"
+}

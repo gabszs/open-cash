@@ -1,0 +1,50 @@
+{
+	"name": "agent",
+	"private": true,
+	"type": "module",
+	"main": "src/app.ts",
+	"scripts": {
+		"lint": "oxlint --config ../../oxlint.config.mjs --fix . && oxfmt --config ../../oxfmt.config.mjs --write .",
+		"lint:check": "oxfmt --config ../../oxfmt.config.mjs --check . && oxlint --config ../../oxlint.config.mjs .",
+		"lint:unsafe": "oxlint --config ../../oxlint.config.mjs --fix-dangerously . && oxfmt --config ../../oxfmt.config.mjs --write .",
+		"format": "oxfmt --config ../../oxfmt.config.mjs --write .",
+		"format:check": "oxfmt --config ../../oxfmt.config.mjs --check .",
+		"build": "vite build",
+		"deploy": "bun run build && wrangler deploy --config dist/open_cash_finance_agent/wrangler.json",
+		"dev:wrangler": "bun run build && wrangler dev --config dist/open_cash_finance_agent/wrangler.json",
+		"preview": "vite preview",
+		"typegen": "wrangler types",
+		"typecheck": "tsc -b",
+		"dev": "vite dev",
+		"debug": "vite dev --debug",
+		"deploy:dry-run": "bun run build && wrangler deploy --dry-run --containers-rollout=none --config dist/open_cash_finance_agent/wrangler.json"
+	},
+	"dependencies": {
+		"@cloudflare/sandbox": "0.12.5",
+		"@earendil-works/pi-ai": "^0.83.0",
+		"@flue/opentelemetry": "2.0.3",
+		"@flue/runtime": "2.0.3",
+		"@open-cash/files": "workspace:*",
+		"@opentelemetry/api": "^1.9.0",
+		"@opentelemetry/context-async-hooks": "^2.10.0",
+		"@opentelemetry/core": "^2.10.0",
+		"@opentelemetry/otlp-transformer": "^0.221.0",
+		"@opentelemetry/resources": "^2.10.0",
+		"@opentelemetry/sdk-trace-base": "^2.10.0",
+		"@opentelemetry/semantic-conventions": "^1.43.0",
+		"agents": "^0.20.1",
+		"drizzle-orm": "^0.45.2",
+		"hono": "catalog:",
+		"hono-problem-details": "0.10.1",
+		"jose": "^6.2.3",
+		"valibot": "^1.4.2"
+	},
+	"devDependencies": {
+		"@cloudflare/vite-plugin": "^1.50.0",
+		"@flue/cli": "2.0.3",
+		"@flue/vite": "2.0.3",
+		"@types/node": "catalog:",
+		"vite": "8.1.5",
+		"wrangler": "^4.118.0"
+	}
+}

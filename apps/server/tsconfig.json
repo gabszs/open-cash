@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"verbatimModuleSyntax": true,
+		"strict": true,
+		"skipLibCheck": true,
+		// Prefixo próprio (não `@/*`): o fonte deste app é compilado dentro do
+		// programa do `web` via `import type { AppType }`, e `paths` é global ao
+		// programa — um `@/*` compartilhado faria os imports do server caírem em
+		// `apps/web/src` (ex.: `@/lib/orpc`, que existe nos dois).
+		"paths": {
+			"@server/*": ["./src/*"],
+			"@root/*": ["../../*"]
+		},
+		"outDir": "./dist",
+		"types": ["bun", "node"],
+		"composite": true,
+		"jsx": "preserve",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"jsxImportSource": "hono/jsx"
+	},
+	"exclude": ["node_modules", "**/node_modules", "dist", "tests", "test"]
+}

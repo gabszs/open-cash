@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"verbatimModuleSyntax": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"noUncheckedIndexedAccess": true,
+		"noEmit": true,
+		// Both consumers are Workers, but this package is not one: it has no
+		// `worker-configuration.d.ts` of its own, so the R2 types come from here.
+		"types": ["@cloudflare/workers-types"]
+	},
+	// `test` stays out, like in the apps: `bun:test` types would have to be mixed
+	// with the Workers ones, and the two redeclare the same globals.
+	"include": ["src"],
+	"exclude": ["node_modules", "test"]
+}

@@ -1,0 +1,23 @@
+# Local dev secrets for `wrangler dev`. Copy to `.dev.vars` (gitignored).
+# Vars with a plain value live in the generated wrangler.jsonc; only secrets
+# belong here.
+
+# Better Auth falls back to a development-only value when unset, so this is
+# optional locally and required in production.
+AUTH_SECRET=
+# Seals each user's Pluggy client secret before it is stored in D1. No fallback:
+# the finance routes need it to read back any connection you saved locally.
+FINANCE_ENCRYPTION_KEY=
+
+# Pluggy credentials are entered per authenticated user through the Open Cash
+# settings flow. Do not put PLUGGY_CLIENT_ID, PLUGGY_CLIENT_SECRET or
+# PLUGGY_ITEM_IDS in this file.
+
+# Social login is opt-in: leave a pair blank and Better Auth skips that
+# provider. Both values are required to enable one.
+# GitHub callback URL: http://localhost:8787/v1/auth/callback/github
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+# Google callback URL: http://localhost:8787/v1/auth/callback/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
